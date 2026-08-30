@@ -1,16 +1,72 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Apple, PlayCircle, ArrowRight, Check } from 'lucide-react';
+import { Apple, PlayCircle, ArrowRight, Check, Loader2 } from 'lucide-react';
 import { Container, Eyebrow } from '../components/ui.jsx';
 
-export default function CTA() {
-  const [email, setEmail]         = useState('');
-  const [submitted, setSubmitted] = useState(false);
+const GOOGLE_SCRIPT_URL = import.meta.env.VITE_WAITLIST_API_URL || '';
 
-  function handleSubmit(e) {
+export default function CTA() {
+  const [email, setEmail] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [error, setError] = useState('');
+
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!email.includes('@')) return;
-    setSubmitted(true);
+
+    setLoading(true);
+    setError('');
+
+    // 1. Detect location & timezone in background
+    let locationData = {
+      city: '',
+      region: '',
+      country: '',
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || '',
+    };
+
+    try {
+      const geoRes = await fetch('https://ipapi.co/json/', { cache: 'no-store' });
+      if (geoRes.ok) {
+        const geo = await geoRes.json();
+        locationData.city = geo.city || '';
+        locationData.region = geo.region || '';
+        locationData.country = geo.country_name || geo.country || '';
+        if (geo.timezone) locationData.timezone = geo.timezone;
+      }
+    } catch {
+      // Fallback silently if ad-blocker or offline
+    }
+
+    try {
+      if (GOOGLE_SCRIPT_URL) {
+        // 2. Send email + location details to Google Sheet
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email,
+            city: locationData.city,
+            region: locationData.region,
+            country: locationData.country,
+            timezone: locationData.timezone,
+            timestamp: new Date().toLocaleString(),
+            source: 'storeql-web',
+          }),
+        });
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error('Failed to submit email:', err);
+      setSubmitted(true);
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -41,7 +97,7 @@ export default function CTA() {
             <div className="flex h-7 w-7 items-center justify-center rounded-full bg-success/25">
               <Check size={14} className="text-success" />
             </div>
-            You're on the list — we'll be in touch.
+            <span>You're on the list ({email}) — we'll be in touch!</span>
           </motion.div>
         ) : (
           <form
@@ -52,18 +108,34 @@ export default function CTA() {
               type="email"
               id="waitlist-email"
               required
+              disabled={loading}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@email.com"
-              className="w-full flex-1 rounded-full border border-cream/12 bg-charcoal-alt px-5 py-3.5 text-[0.95rem] text-cream placeholder:text-cream/30 outline-none focus:border-accent-bright/60 transition-colors"
+              className="w-full flex-1 rounded-full border border-cream/12 bg-charcoal-alt px-5 py-3.5 text-[0.95rem] text-cream placeholder:text-cream/30 outline-none focus:border-accent-bright/60 transition-colors disabled:opacity-50"
             />
             <button
               type="submit"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-[0.95rem] font-medium text-cream transition-colors hover:bg-accent-deep shrink-0"
+              disabled={loading}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3.5 text-[0.95rem] font-medium text-cream transition-colors hover:bg-accent-deep shrink-0 disabled:opacity-50"
             >
-              Join waitlist <ArrowRight size={16} />
+              {loading ? (
+                <>
+                  <Loader2 size={16} className="animate-spin" />
+                  <span>Joining...</span>
+                </>
+              ) : (
+                <>
+                  <span>Join waitlist</span>
+                  <ArrowRight size={16} />
+                </>
+              )}
             </button>
           </form>
+        )}
+
+        {error && (
+          <p className="mt-3 text-xs text-danger">{error}</p>
         )}
 
         {/* Platform badges */}
