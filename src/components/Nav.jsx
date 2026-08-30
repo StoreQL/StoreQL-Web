@@ -47,7 +47,7 @@ export default function Nav() {
             aria-label="StoreQL home"
             className="flex items-center gap-2 group transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            <Logo markClassName="h-7 w-7" className="gap-2" />
+            <Logo markClassName="h-10 w-10" className="gap-2.5" />
           </a>
 
           {/* Desktop Navigation Links */}

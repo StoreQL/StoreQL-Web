@@ -76,7 +76,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.05 }}
           >
-            <Eyebrow>Store Quick Links</Eyebrow>
+            <Eyebrow>One place for every link that matters</Eyebrow>
           </motion.div>
 
           <h1 className="mt-6 font-display text-[2.75rem] leading-[1.04] text-cream sm:text-[3.5rem] lg:text-[4rem] text-balance">
@@ -85,10 +85,10 @@ export default function Hero() {
             <RevealLine text="StoreQL" delayStart={3} />
             {' '}
             <span className="text-accent-bright">
-              <RevealLine text="remembers" delayStart={4} />
+              <RevealLine text="stores it." delayStart={4} />
             </span>
             <br />
-            <RevealLine text="why it mattered." delayStart={5} />
+            <RevealLine text="Find it anytime." delayStart={5} />
           </h1>
 
           <motion.p
@@ -97,7 +97,7 @@ export default function Hero() {
             transition={{ duration: 0.7, delay: 0.9 }}
             className="mt-7 max-w-[440px] text-[1.05rem] leading-[1.75] text-cream/55"
           >
-            Share from Instagram, Chrome, WhatsApp — anywhere. StoreQL catches it, fetches the details, and gives you ten quiet seconds to note why it's worth keeping.
+            Share from Instagram, Chrome, WhatsApp — anywhere. StoreQL saves it in one place, fetches the details automatically, and lets you add a quick note so you always know why you saved it.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -122,9 +122,9 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 1.25 }}
             className="mt-9 flex flex-wrap gap-3"
           >
-            <StatBadge value="10s" label="Average capture time" delay={1.3} />
-            <StatBadge value="∞" label="Sources supported" delay={1.4} />
-            <StatBadge value="0" label="Steps to organize" delay={1.5} />
+            <StatBadge value="10s" label="Save any link" delay={1.3} />
+            <StatBadge value="1" label="Place for everything" delay={1.4} />
+            <StatBadge value="∞" label="Sources supported" delay={1.5} />
           </motion.div>
         </div>
 

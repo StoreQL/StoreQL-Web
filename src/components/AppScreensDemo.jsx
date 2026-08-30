@@ -136,14 +136,14 @@ function IconCheck({ className }) {
 
 function StepDots({ activeIndex }) {
   return (
-    <div className="absolute top-3 right-3 z-40 flex items-center gap-1 rounded-full bg-ink/80 px-2.5 py-1 backdrop-blur-md border border-white/10">
+    <div className="absolute top-3 right-3 z-40 flex items-center gap-[5px] rounded-full bg-ink/75 px-2 py-[5px] backdrop-blur-md border border-white/8">
       {STEP_LABELS.map((label, i) => (
         <span
           key={label}
-          className="h-1.5 rounded-full transition-all duration-300"
+          className="h-[5px] rounded-full transition-all duration-300"
           style={{
-            width: i === activeIndex ? 14 : 4,
-            backgroundColor: i === activeIndex ? 'var(--color-accent-bright)' : 'rgba(255,255,255,0.25)',
+            width: i === activeIndex ? 12 : 4,
+            backgroundColor: i === activeIndex ? 'var(--color-accent-bright)' : 'rgba(255,255,255,0.22)',
           }}
         />
       ))}
@@ -155,7 +155,7 @@ function StepDots({ activeIndex }) {
 
 function InstagramBottomNav() {
   return (
-    <div className="mt-auto border-t border-white/10 bg-[#0B0A08] px-5 pt-2 pb-2">
+    <div className="mt-auto border-t border-white/10 bg-[#0B0A08] px-4 pt-2 pb-2">
       <div className="flex items-center justify-between text-neutral-300">
         <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
           <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
@@ -183,17 +183,17 @@ function InstagramBottomNav() {
 
 function StoreQLBottomNav({ active = 'home' }) {
   return (
-    <div className="relative mt-auto border-t border-ink/8 bg-white px-3 pt-1 pb-2 shadow-[0_-2px_10px_rgba(23,22,15,0.03)]">
+    <div className="relative mt-auto border-t border-ink/8 bg-white px-2 pt-1 pb-2 shadow-[0_-2px_10px_rgba(23,22,15,0.03)]">
       {/* Center Cat Button */}
-      <div className="absolute left-1/2 -top-5 -translate-x-1/2 cursor-pointer transition-transform hover:scale-105 active:scale-95">
+      <div className="absolute left-1/2 -top-[18px] -translate-x-1/2 cursor-pointer transition-transform hover:scale-105 active:scale-95">
         <img
           src={createPng}
           alt="Create"
-          className="h-11 w-auto drop-shadow-[0_4px_8px_rgba(181,69,27,0.25)]"
+          className="h-10 w-auto drop-shadow-[0_4px_8px_rgba(181,69,27,0.25)]"
         />
       </div>
 
-      <div className="flex items-center justify-between px-2">
+      <div className="flex items-center justify-between px-1.5">
         <div className="flex flex-col items-center gap-0.5">
           <svg
             viewBox="0 0 24 24"
@@ -264,7 +264,7 @@ function InstagramScene({ segment, progress }) {
   const isTappingStoreQL = segment.id === 'tapStoreQL';
 
   return (
-    <div className="absolute inset-0 flex flex-col bg-[#0B0A08] text-white rounded-[32px] overflow-hidden">
+    <div className="absolute inset-0 flex flex-col bg-[#0B0A08] text-white rounded-[38px] overflow-hidden">
       {/* Top Bar */}
       <div className="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
         <div className="flex items-center gap-2">
@@ -390,23 +390,23 @@ function StoreQLScene({ segment, progress }) {
   const typedLen = Math.round(NOTE_TEXT.length * typeProgress);
 
   return (
-    <div className="absolute inset-0 flex flex-col bg-[#FAF9F6] text-ink rounded-[32px] overflow-hidden">
-      <div className="flex-1 px-4 pt-3.5 overflow-hidden">
+    <div className="absolute inset-0 flex flex-col bg-[#FAF9F6] text-ink rounded-[38px] overflow-hidden">
+      <div className="flex-1 px-3.5 pt-4 overflow-hidden">
         {/* App Header */}
-        <div className="mb-2.5 flex items-center justify-between">
+        <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={logoPng} alt="StoreQL" className="h-6 w-6 rounded-full object-cover" />
-            <span className="font-display text-[12px] font-semibold tracking-tight text-ink">StoreQL Capture</span>
+            <img src={logoPng} alt="StoreQL" className="h-5 w-5 rounded-full object-cover" />
+            <span className="font-display text-[11.5px] font-semibold tracking-tight text-ink">StoreQL Capture</span>
           </div>
-          <span className="rounded-full bg-accent/10 px-2 py-0.5 font-mono text-[8.5px] font-medium text-accent">
+          <span className="rounded-full bg-accent/10 px-2 py-0.5 font-mono text-[7.5px] font-semibold text-accent uppercase tracking-wide">
             Instant Save
           </span>
         </div>
 
         {/* Captured Link Card with dummy_post.png thumbnail */}
         <div className="rounded-2xl border border-ink/8 bg-white p-2.5 shadow-[0_2px_8px_rgba(23,22,15,0.04)]">
-          <div className="flex gap-2.5">
-            <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-neutral-200">
+          <div className="flex gap-2">
+            <div className="relative h-11 w-11 shrink-0 overflow-hidden rounded-xl bg-neutral-200">
               {!isCapturing && (
                 <img
                   src={dummyPostImg}
@@ -442,18 +442,18 @@ function StoreQLScene({ segment, progress }) {
 
         {/* Note Field */}
         <div
-          className="mt-2.5 rounded-2xl border bg-white p-3 transition-all shadow-[0_2px_8px_rgba(23,22,15,0.04)]"
+          className="mt-2 rounded-2xl border bg-white p-2.5 transition-all shadow-[0_2px_8px_rgba(23,22,15,0.04)]"
           style={{
             borderColor: isResolved || isTyping ? 'var(--color-accent)' : 'rgba(23,22,15,0.08)',
           }}
         >
           <div className="flex items-center justify-between mb-1">
-            <p className="text-[9px] font-mono uppercase tracking-wider text-ash">
+            <p className="text-[8px] font-mono uppercase tracking-wider text-ash">
               Note (why it's worth keeping)
             </p>
-            <span className="text-[8.5px] text-accent font-mono">1 sentence</span>
+            <span className="text-[7.5px] text-accent font-mono font-semibold">1 sentence</span>
           </div>
-          <p className="min-h-[20px] text-[11.5px] leading-snug text-ink font-medium">
+          <p className="min-h-[18px] text-[11px] leading-snug text-ink font-medium">
             {NOTE_TEXT.slice(0, typedLen)}
             {isTyping && (
               <span className="animate-pulse font-bold" style={{ color: 'var(--color-accent)' }}>
@@ -461,15 +461,15 @@ function StoreQLScene({ segment, progress }) {
               </span>
             )}
             {!isTyping && !isTapSave && !isSaved && typedLen === 0 && (
-              <span className="text-ash/50 text-[10.5px]">Add quick reason for future-you...</span>
+              <span className="text-ash/50 text-[10px]">Add quick reason for future-you...</span>
             )}
           </p>
         </div>
 
         {/* Folder & Tag Pills */}
-        <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+        <div className="mt-2 flex flex-wrap items-center gap-1">
           <span
-            className="flex items-center gap-1 rounded-full px-2.5 py-0.8 text-[9px] font-medium transition-all"
+            className="flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[8.5px] font-medium transition-all"
             style={
               chipsOn
                 ? { backgroundColor: 'var(--color-accent-soft)', color: 'var(--color-accent-deep)' }
@@ -480,7 +480,7 @@ function StoreQLScene({ segment, progress }) {
             Travel
           </span>
           <span
-            className="flex items-center gap-1 rounded-full px-2.5 py-0.8 text-[9px] font-medium transition-all"
+            className="flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[8.5px] font-medium transition-all"
             style={
               chipsOn
                 ? { backgroundColor: '#F2F1ED', color: '#17160F' }
@@ -493,12 +493,12 @@ function StoreQLScene({ segment, progress }) {
         </div>
 
         {/* Save Button with Finger Pointer */}
-        <div className="relative mt-3 flex justify-end">
+        <div className="relative mt-2.5 flex justify-end">
           <div className="relative">
             <motion.div
               animate={isTapSave || isSaved ? { scale: [1, 0.92, 1] } : {}}
               transition={{ duration: 0.25 }}
-              className="flex items-center gap-1.5 rounded-full bg-accent px-4 py-1.5 text-[11px] font-semibold text-white shadow-md shadow-accent/25"
+              className="flex items-center gap-1.5 rounded-full bg-accent px-4 py-1.5 text-[10.5px] font-semibold text-white shadow-md shadow-accent/25"
             >
               <span>Save Link</span>
             </motion.div>
@@ -548,15 +548,15 @@ function StoreQLScene({ segment, progress }) {
 function HomeScene({ progress }) {
   const cardIn = clamp(progress / 0.35);
   return (
-    <div className="absolute inset-0 flex flex-col overflow-hidden bg-[#FAF9F6] text-ink rounded-[32px]">
-      <div className="flex-1 px-4 pt-3.5 overflow-hidden">
+    <div className="absolute inset-0 flex flex-col overflow-hidden bg-[#FAF9F6] text-ink rounded-[38px]">
+      <div className="flex-1 px-3.5 pt-4 overflow-hidden">
         {/* Header */}
-        <div className="mb-2.5 flex items-center justify-between">
+        <div className="mb-3 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <img src={logoPng} alt="StoreQL" className="h-6 w-6 rounded-full object-cover" />
-            <span className="font-display text-[13px] font-bold text-ink">StoreQL</span>
+            <img src={logoPng} alt="StoreQL" className="h-5 w-5 rounded-full object-cover" />
+            <span className="font-display text-[12.5px] font-bold text-ink">StoreQL</span>
           </div>
-          <span className="font-mono text-[9px] text-ash">3 captures today</span>
+          <span className="font-mono text-[8px] text-ash">3 captures today</span>
         </div>
 
         {/* Newly Captured Card with dummy_post.png thumbnail */}
@@ -630,7 +630,7 @@ export default function AppScreensDemo() {
   const stepIndex = STEP_LABELS.indexOf(segment.label);
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-[32px] bg-ink">
+    <div className="relative h-full w-full overflow-hidden rounded-[38px] bg-ink">
       <AnimatePresence mode="wait">
         {segment.scene === 'instagram' && (
           <motion.div key="instagram" className="absolute inset-0 flex flex-col" exit={{ opacity: 0 }}>
