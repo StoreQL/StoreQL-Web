@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import logoPng from '../assets/logo.png';
 import createPng from '../assets/create.png';
+import dummyPostImg from '../assets/dummy_post.png';
 
 /**
  * A self-playing, looping interactive demo of the StoreQL capture flow:
- * 1. Browsing Instagram → taps Share button on post
+ * 1. Browsing Instagram travel post → taps Share button on post
  * 2. Share sheet opens → taps StoreQL icon
  * 3. StoreQL captures & fetches details automatically
  * 4. Adds a quick note on why it's worth keeping
@@ -19,13 +20,13 @@ const TIMELINE = [
   { id: 'tapStoreQL',  start: 2500, end: 3200, scene: 'instagram', label: 'Share from anywhere' },
   { id: 'capturing',   start: 3200, end: 4300, scene: 'storeql',   label: 'StoreQL fetches details' },
   { id: 'resolved',    start: 4300, end: 5000, scene: 'storeql',   label: 'StoreQL fetches details' },
-  { id: 'typing',      start: 5000, end: 7000, scene: 'storeql',   label: 'Add a quick note' },
-  { id: 'tapSave',     start: 7000, end: 7700, scene: 'storeql',   label: 'Add a quick note' },
-  { id: 'saved',       start: 7700, end: 8600, scene: 'storeql',   label: 'Saved — done' },
-  { id: 'feedNew',     start: 8600, end: 10800, scene: 'home',     label: 'Saved — done' },
+  { id: 'typing',      start: 5000, end: 7200, scene: 'storeql',   label: 'Add a quick note' },
+  { id: 'tapSave',     start: 7200, end: 7900, scene: 'storeql',   label: 'Add a quick note' },
+  { id: 'saved',       start: 7900, end: 8800, scene: 'storeql',   label: 'Saved — done' },
+  { id: 'feedNew',     start: 8800, end: 11000, scene: 'home',     label: 'Saved — done' },
 ];
 const LOOP_MS = TIMELINE[TIMELINE.length - 1].end;
-const NOTE_TEXT = 'Loved the moody color grading here';
+const NOTE_TEXT = 'Must visit this seaside cafe on our trip';
 const STEP_LABELS = ['Share from anywhere', 'StoreQL fetches details', 'Add a quick note', 'Saved — done'];
 
 function clamp(v, min = 0, max = 1) {
@@ -271,21 +272,28 @@ function InstagramScene({ segment, progress }) {
             <div className="h-full w-full rounded-full bg-[#18181b]" />
           </div>
           <div>
-            <p className="text-[11px] font-semibold leading-tight text-neutral-100">design.archive</p>
-            <p className="text-[8.5px] text-neutral-400">Tokyo, Japan</p>
+            <p className="text-[11px] font-semibold leading-tight text-neutral-100">travel.escapes</p>
+            <p className="text-[8.5px] text-neutral-400">Mediterranean Sea</p>
           </div>
         </div>
         <span className="text-[11px] text-neutral-400">•••</span>
       </div>
 
-      {/* Post Image */}
-      <div className="relative mx-3 my-1.5 flex-1 overflow-hidden rounded-xl bg-gradient-to-br from-neutral-800 to-neutral-900 shadow-inner flex flex-col justify-end p-3.5">
-        <div className="bg-gradient-to-t from-black/80 via-black/30 to-transparent p-2 rounded-lg">
-          <span className="rounded bg-black/50 px-1.5 py-0.5 font-mono text-[7.5px] uppercase tracking-wider text-white/80 backdrop-blur-sm">
-            Architecture
+      {/* Post Image with Travel photo dummy_post.png */}
+      <div className="relative mx-3 my-1.5 flex-1 overflow-hidden rounded-xl bg-neutral-900 shadow-inner flex flex-col justify-end">
+        <img
+          src={dummyPostImg}
+          alt="Travel Destination"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+        />
+
+        {/* Subtle bottom gradient & caption overlay */}
+        <div className="relative z-10 bg-gradient-to-t from-black/85 via-black/35 to-transparent p-3 rounded-b-xl">
+          <span className="rounded bg-black/60 px-1.5 py-0.5 font-mono text-[7.5px] uppercase tracking-wider text-white/90 backdrop-blur-sm">
+            Travel
           </span>
-          <p className="mt-1 text-[11px] font-medium leading-snug text-neutral-100">
-            Golden hour tones on minimal concrete architecture
+          <p className="mt-1 text-[11px] font-medium leading-snug text-neutral-100 drop-shadow-sm">
+            Hidden cliffside cafe overlooking the Mediterranean coast 🌊
           </p>
         </div>
       </div>
@@ -395,14 +403,16 @@ function StoreQLScene({ segment, progress }) {
           </span>
         </div>
 
-        {/* Captured Link Card */}
+        {/* Captured Link Card with dummy_post.png thumbnail */}
         <div className="rounded-2xl border border-ink/8 bg-white p-2.5 shadow-[0_2px_8px_rgba(23,22,15,0.04)]">
           <div className="flex gap-2.5">
             <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl bg-neutral-200">
               {!isCapturing && (
-                <div className="h-full w-full bg-gradient-to-br from-neutral-700 to-neutral-900 p-1 flex items-end">
-                  <span className="text-[6.5px] text-white/80 font-mono">IG Post</span>
-                </div>
+                <img
+                  src={dummyPostImg}
+                  alt="Seaside Cafe"
+                  className="h-full w-full object-cover object-center"
+                />
               )}
               {isCapturing && (
                 <div className="absolute inset-0 shimmer-bar" />
@@ -417,7 +427,7 @@ function StoreQLScene({ segment, progress }) {
               ) : (
                 <>
                   <p className="text-[11.5px] font-semibold leading-tight text-ink truncate">
-                    Minimal concrete architecture
+                    Cliffside Mediterranean cafe & view
                   </p>
                   <div className="flex items-center gap-1.5">
                     <span className="font-mono text-[9px] text-ash truncate">instagram.com</span>
@@ -467,7 +477,7 @@ function StoreQLScene({ segment, progress }) {
             }
           >
             <IconFolder className="h-2.5 w-2.5" />
-            Inspiration
+            Travel
           </span>
           <span
             className="flex items-center gap-1 rounded-full px-2.5 py-0.8 text-[9px] font-medium transition-all"
@@ -478,7 +488,7 @@ function StoreQLScene({ segment, progress }) {
             }
           >
             <IconTag className="h-2.5 w-2.5" />
-            #Architecture
+            #PlacesToVisit
           </span>
         </div>
 
@@ -524,7 +534,7 @@ function StoreQLScene({ segment, progress }) {
               >
                 <IconCheck className="h-6 w-6" />
               </motion.div>
-              <p className="text-[13px] font-bold text-ink">Captured to Inspiration</p>
+              <p className="text-[13px] font-bold text-ink">Captured to Travel</p>
               <p className="text-[10px] text-ash font-mono">Syncing across devices</p>
             </div>
           </motion.div>
@@ -549,7 +559,7 @@ function HomeScene({ progress }) {
           <span className="font-mono text-[9px] text-ash">3 captures today</span>
         </div>
 
-        {/* Newly Captured Card */}
+        {/* Newly Captured Card with dummy_post.png thumbnail */}
         <div
           className="mb-2 flex items-start gap-2.5 rounded-2xl border border-accent/30 bg-white p-2.5 shadow-[0_4px_12px_rgba(181,69,27,0.08)] transition-all"
           style={{
@@ -557,8 +567,12 @@ function HomeScene({ progress }) {
             transform: `translateY(${(1 - cardIn) * -16}px)`,
           }}
         >
-          <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-neutral-800 p-1 flex items-end">
-            <span className="text-[6px] font-mono text-white/70">IG</span>
+          <div className="h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-neutral-100">
+            <img
+              src={dummyPostImg}
+              alt="Seaside Cafe"
+              className="h-full w-full object-cover object-center"
+            />
           </div>
           <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between">
@@ -568,7 +582,7 @@ function HomeScene({ progress }) {
               </span>
             </div>
             <p className="truncate text-[11px] font-bold text-ink mt-0.5">
-              Minimal concrete architecture
+              Cliffside Mediterranean cafe & view
             </p>
             <p className="truncate text-[9.5px] italic text-accent-deep mt-0.5">
               "{NOTE_TEXT}"
